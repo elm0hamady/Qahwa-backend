@@ -1,0 +1,33 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+
+# Django
+*.log
+media/
+staticfiles/
+db.sqlite3
+
+# Virtual environment
+venv/
+env/
+.venv/
+Lib/
+Scripts/
+Include/
+pyvenv.cfg
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+docker-compose.override.yml

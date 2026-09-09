@@ -31,3 +31,6 @@ pyvenv.cfg
 
 # Docker
 docker-compose.override.yml
+
+frontend/
+mobile/

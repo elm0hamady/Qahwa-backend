@@ -7,36 +7,42 @@ from rest_framework.response import Response
 from rest_framework import status
 from apps.accounts.tasks import send_user_confirmation_email
 from apps.accounts.serializers import RegisterSerializer
-
+import traceback
 
 User = get_user_model()
 
 
+
 class RegisterView(APIView):
     def post(self, request):
-        serializer = RegisterSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        validated = serializer.validated_data
+        try:
+            serializer = RegisterSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            validated = serializer.validated_data
 
-        host = User.objects.create_user(
-            first_name=validated['first_name'],
-            last_name=validated['last_name'],
-            username=validated['username'],
-            email=validated['email'],
-            password=validated['password'],
-            is_active=False,
-        )
+            host = User.objects.create_user(
+                first_name=validated['first_name'],
+                last_name=validated['last_name'],
+                username=validated['username'],
+                email=validated['email'],
+                password=validated['password'],
+                is_active=False,
+            )
 
-        uid = urlsafe_base64_encode(force_bytes(host.pk))
-        token = default_token_generator.make_token(host)
-        verification_link = f"http://localhost:5173/verify-email/{uid}/{token}"
+            uid = urlsafe_base64_encode(force_bytes(host.pk))
+            token = default_token_generator.make_token(host)
+            verification_link = f"https://qahwa-32de.onrender.com/api/verify-email/{uid}/{token}/"
 
-        send_user_confirmation_email.delay(host.username, host.email, verification_link)
+            send_user_confirmation_email.delay(host.username, host.email, verification_link)
 
-        return Response(
-            {"message": "Account created. Please check your email to activate your account."},
-            status=status.HTTP_201_CREATED
-        )
+            return Response(
+                {"message": "Account created. Please check your email to activate your account."},
+                status=status.HTTP_201_CREATED
+            )
+        except Exception as e:
+            print("REGISTER ERROR:", str(e))
+            print(traceback.format_exc())
+            raise
 
 
 class VerifyEmailView(APIView):

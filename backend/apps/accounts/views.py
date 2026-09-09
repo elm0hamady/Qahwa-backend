@@ -15,6 +15,7 @@ User = get_user_model()
 
 class RegisterView(APIView):
     def post(self, request):
+        print("REGISTER VIEW HIT - request received")
         try:
             serializer = RegisterSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)

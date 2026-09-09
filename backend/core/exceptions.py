@@ -24,3 +24,6 @@ class InvalidAdjustmentAmountError(Exception):
 
 class NoActiveSessionError(Exception):
     pass
+
+class QuestionNotOpenedError(Exception):
+    pass

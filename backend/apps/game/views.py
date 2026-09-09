@@ -6,12 +6,12 @@ from rest_framework.permissions import IsAuthenticated
 from core.exceptions import (
     SessionAlreadyActiveError,InvalidAdjustmentAmountError,InvalidTopicCountError,PlayerNotInSessionError,
     DuplicateTopicError,QuestionAlreadyJudgedError,QuestionAlreadyOpenedError,NoActiveSessionError,
-    InsufficientQuestionPoolError
+    InsufficientQuestionPoolError,QuestionNotOpenedError
 )
 from .services import (
     start_session,get_current_session ,get_scoreboard,get_owned_player,
     adjust_player_score,judge_question,abandon_session,get_owned_session,
-    get_owned_session_question,open_question
+    get_owned_session_question,open_question,get_answer
 )
 from .serializers import (
     SessionSerializer,SessionQuestionSerializer,
@@ -144,4 +144,15 @@ class ScoreboardView(APIView):
 
         serializer = ScoreboardEntrySerializer(entries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class SessionQuestionAnswerView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, public_id):
+        session_question = get_owned_session_question(host=request.user, public_id=public_id)
+        try:
+            answer = get_answer(session_question.id)
+        except QuestionNotOpenedError:
+            return Response({"error": "Open the question before revealing its answer."}, status=status.HTTP_409_CONFLICT)
+        return Response(answer, status=status.HTTP_200_OK)
         

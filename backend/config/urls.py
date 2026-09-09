@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include('apps.game.urls')),
     path('api/', include('apps.bank.urls')),
+    path("api/", include('apps.accounts.urls')),
     path('api/token/', TokenObtainPairView.as_view()),
     path('api/token/refresh/', TokenRefreshView.as_view()),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

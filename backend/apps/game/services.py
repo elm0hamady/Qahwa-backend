@@ -4,9 +4,10 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db.models import Count ,Sum
 from apps.game.models import Session, Player, SessionTopic, SessionQuestion
-from apps.bank.models import Question
+from apps.bank.models import Question,Answer
 from core.constants import DIFFICULTIES, MIN_QUESTIONS_PER_DIFFICULTY,REQUIRED_TOPIC_COUNT
 from core.exceptions import (
+    QuestionNotOpenedError,
     SessionAlreadyActiveError,
     InvalidTopicCountError,
     DuplicateTopicError,
@@ -139,7 +140,10 @@ def abandon_session(host):
     session = Session.objects.filter(host=host,status=Session.SessionStatus.INPROGRESS).first()
     if session is None:
         raise NoActiveSessionError()
-    session.delete()
+    
+    with transaction.atomic():
+            SessionQuestion.objects.filter(session=session).delete()
+            session.delete()
     return None
 
 def get_owned_session(host, public_id):
@@ -150,3 +154,21 @@ def get_owned_session_question(host, public_id):
 
 def get_owned_player(host, player_id):
     return get_object_or_404(Player, id=player_id, session__host=host)
+
+def get_answer(session_question_id):
+    session_question = SessionQuestion.objects.select_related('question').get(id=session_question_id)
+
+    if session_question.state == SessionQuestion.QuestionState.LOCKED:
+        raise QuestionNotOpenedError()
+
+    question = session_question.question
+    try:
+        answer = question.answer
+    except Answer.DoesNotExist:
+        return {'text': None, 'media': None}
+
+    media = None
+    if hasattr(answer, 'media'):
+        media = {'type': answer.media.media_type, 'url': answer.media.file.url}
+
+    return {'text': answer.text, 'media': media}

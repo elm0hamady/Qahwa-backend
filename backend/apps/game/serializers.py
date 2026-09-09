@@ -27,6 +27,7 @@ class SessionQuestionSerializer(serializers.ModelSerializer):
     topic = serializers.CharField(source='question.topic.name')
     difficulity = serializers.IntegerField(source='question.difficulity')
     player = serializers.CharField(source = 'assigned_player.name')
+    player_id = serializers.IntegerField(source='assigned_player_id')
     text = serializers.SerializerMethodField()
     media = serializers.SerializerMethodField()
 
@@ -47,7 +48,7 @@ class SessionQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SessionQuestion
-        fields = ['id','topic','difficulity','player','state','text','media']
+        fields = ['id','topic','difficulity','player','state','text','media','player_id']
 
 class ScoreboardEntrySerializer(serializers.Serializer):
     player_id = serializers.IntegerField()

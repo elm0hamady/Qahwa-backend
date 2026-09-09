@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm your email</title>
+</head>
+
+<body style="
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
+">
+
+<table width="100%" cellpadding="0" cellspacing="0"
+       style="background-color: #f5f5f5; padding: 40px 20px;">
+
+```
+<tr>
+    <td align="center">
+
+        <table width="100%" cellpadding="0" cellspacing="0"
+               style="
+                   max-width: 600px;
+                   background-color: #ffffff;
+                   border-radius: 12px;
+                   overflow: hidden;
+               ">
+
+            <!-- Header -->
+            <tr>
+                <td style="
+                    padding: 30px;
+                    text-align: center;
+                    background-color: #8B5CF6;
+                ">
+                    <h1 style="
+                        margin: 0;
+                        color: #ffffff;
+                        font-size: 28px;
+                        font-weight: bold;
+                    ">
+                        Qahwa
+                    </h1>
+                </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+                <td style="padding: 40px 35px;">
+
+                    <h2 style="
+                        margin: 0 0 20px 0;
+                        color: #333333;
+                        font-size: 24px;
+                    ">
+                        Welcome, {{ username }}!
+                    </h2>
+
+                    <p style="
+                        margin: 0 0 20px 0;
+                        color: #555555;
+                        font-size: 16px;
+                        line-height: 1.6;
+                    ">
+                        We're excited to have you with us.
+                    </p>
+
+                    <p style="
+                        margin: 0;
+                        color: #555555;
+                        font-size: 16px;
+                        line-height: 1.6;
+                    ">
+                        To get started, please confirm your email
+                        address by clicking the button below.
+                    </p>
+
+                    <!-- Button -->
+                    <table cellpadding="0" cellspacing="0"
+                           style="margin: 30px auto;">
+
+                        <tr>
+                            <td align="center"
+                                style="
+                                    border-radius: 8px;
+                                    background-color: #8B5CF6;
+                                ">
+
+                                <a href="{{ verification_link }}"
+                                   style="
+                                       display: inline-block;
+                                       padding: 14px 32px;
+                                       color: #ffffff;
+                                       text-decoration: none;
+                                       font-size: 16px;
+                                       font-weight: bold;
+                                       border-radius: 8px;
+                                   ">
+                                    Verify Email
+                                </a>
+
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <!-- Fallback Link -->
+                    <p style="
+                        margin: 0 0 8px 0;
+                        color: #777777;
+                        font-size: 14px;
+                        line-height: 1.5;
+                    ">
+                        If the button doesn't work, copy and paste
+                        this link into your browser:
+                    </p>
+
+                    <p style="
+                        margin: 0;
+                        word-break: break-all;
+                        font-size: 13px;
+                        line-height: 1.5;
+                    ">
+                        <a href="{{ verification_link }}"
+                           style="color: #8B5CF6;">
+                            {{ verification_link }}
+                        </a>
+                    </p>
+
+                    <!-- Spam Notice -->
+                    <div style="
+                        margin-top: 30px;
+                        padding: 16px;
+                        background-color: #f8f8f8;
+                        border-radius: 8px;
+                    ">
+
+                        <p style="
+                            margin: 0;
+                            color: #666666;
+                            font-size: 14px;
+                            line-height: 1.6;
+                        ">
+                            <strong>Can't find this email?</strong><br>
+                            Please check your Spam or Junk folder.
+                            Sometimes our emails may end up there by mistake.
+                        </p>
+
+                    </div>
+
+                    <p style="
+                        margin: 30px 0 0 0;
+                        color: #555555;
+                        font-size: 15px;
+                        line-height: 1.6;
+                    ">
+                        If you still can't find it, please contact us
+                        and we'll be happy to help.
+                    </p>
+
+                    <p style="
+                        margin: 30px 0 0 0;
+                        color: #555555;
+                        font-size: 15px;
+                    ">
+                        Welcome aboard!
+                    </p>
+
+                    <p style="
+                        margin: 8px 0 0 0;
+                        color: #8B5CF6;
+                        font-weight: bold;
+                        font-size: 15px;
+                    ">
+                        The Qahwa Team
+                    </p>
+
+                </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+                <td style="
+                    padding: 20px;
+                    text-align: center;
+                    background-color: #fafafa;
+                    color: #999999;
+                    font-size: 12px;
+                ">
+                    © 2026 Qahwa. All rights reserved.
+                </td>
+            </tr>
+
+        </table>
+
+    </td>
+</tr>
+```
+
+</table>
+
+</body>
+</html>
